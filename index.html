@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CRM Lead Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>LeadFlow</h2>
+
+        <p class="menu-title">MENU</p>
+
+        <button class="nav-btn active" onclick="showPage('dashboard')">
+            Dashboard
+        </button>
+
+        <button class="nav-btn" onclick="showPage('leads')">
+            All Leads
+        </button>
+
+        <button class="nav-btn" onclick="showPage('followups')">
+            Follow-ups
+        </button>
+
+        <div class="sidebar-bottom">
+            CRM Management System
+        </div>
+    </div>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1 id="page-title">Dashboard</h1>
+                <p>Manage your leads and grow your business.</p>
+            </div>
+
+            <button class="primary-btn" onclick="openModal()">
+                + Add New Lead
+            </button>
+        </header>
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard-page">
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <p>Total Leads</p>
+                    <h2 id="total-leads">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Converted Leads</p>
+                    <h2 id="converted-leads">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Pending Follow-ups</p>
+                    <h2 id="pending-followups">0</h2>
+                </div>
+
+                <div class="stat-card">
+                    <p>Overdue Follow-ups</p>
+                    <h2 id="overdue-followups">0</h2>
+                </div>
+
+            </div>
+
+            <div class="content-card">
+
+                <h2>Recent Leads</h2>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Company</th>
+                                <th>Status</th>
+                                <th>Follow-up</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recent-leads"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="content-card conversion-card">
+                <h2>Conversion Rate</h2>
+                <h1 id="conversion-rate">0%</h1>
+                <p>Percentage of leads successfully converted.</p>
+            </div>
+
+        </section>
+
+        <!-- ALL LEADS -->
+
+        <section id="leads-page" class="hidden">
+
+            <div class="content-card">
+
+                <div class="toolbar">
+
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search leads..."
+                        oninput="renderLeads()"
+                    >
+
+                    <select id="status-filter" onchange="renderLeads()">
+                        <option value="">All Statuses</option>
+                        <option value="New">New</option>
+                        <option value="Contacted">Contacted</option>
+                        <option value="Interested">Interested</option>
+                        <option value="Converted">Converted</option>
+                        <option value="Lost">Lost</option>
+                    </select>
+
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Company</th>
+                                <th>Status</th>
+                                <th>Follow-up</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="leads-table"></tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- FOLLOW-UPS -->
+
+        <section id="followups-page" class="hidden">
+
+            <div class="content-card">
+
+                <h2>Follow-up Tracker</h2>
+
+                <p class="description">
+                    Track upcoming and overdue lead follow-ups.
+                </p>
+
+                <div id="followup-list"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ADD / EDIT MODAL -->
+
+    <div id="lead-modal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Lead</h2>
+
+                <button class="close-btn" onclick="closeModal()">
+                    &times;
+                </button>
+            </div>
+
+            <form id="lead-form">
+
+                <input type="hidden" id="lead-id">
+
+                <label>Full Name *</label>
+                <input type="text" id="name" required>
+
+                <label>Email Address *</label>
+                <input type="email" id="email" required>
+
+                <label>Phone Number</label>
+                <input type="text" id="phone">
+
+                <label>Company</label>
+                <input type="text" id="company">
+
+                <label>Lead Source</label>
+                <select id="source">
+                    <option>Website</option>
+                    <option>Referral</option>
+                    <option>Social Media</option>
+                    <option>Advertisement</option>
+                    <option>Other</option>
+                </select>
+
+                <label>Status</label>
+                <select id="status">
+                    <option>New</option>
+                    <option>Contacted</option>
+                    <option>Interested</option>
+                    <option>Converted</option>
+                    <option>Lost</option>
+                </select>
+
+                <label>Follow-up Date</label>
+                <input type="date" id="follow_up">
+
+                <label>Notes</label>
+                <textarea id="notes" rows="3"></textarea>
+
+                <button type="submit" class="primary-btn save-btn">
+                    Save Lead
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
